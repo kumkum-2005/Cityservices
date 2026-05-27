@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>CityServe – Jharkhand</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#3b4fe4;--primary-dark:#2a3acf;--primary-light:#eef0fd;
+  --green:#16a34a;--green-light:#dcfce7;
+  --red:#ef4444;--red-light:#fee2e2;
+  --amber:#f59e0b;--amber-light:#fef3c7;
+  --bg:#f0f2fa;--card:#fff;--text:#111827;--muted:#6b7280;--border:#e5e7eb;
+  --shadow:0 2px 12px rgba(59,79,228,.08);--r:16px;--rs:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:'DM Sans',sans-serif;background:#8899cc;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:16px;}
+
+.phone{width:390px;height:820px;background:var(--bg);border-radius:42px;overflow:hidden;
+  box-shadow:0 40px 100px rgba(0,0,0,.5),0 0 0 10px #1a1d2e,inset 0 0 0 2px #333;
+  display:flex;flex-direction:column;position:relative;}
+
+/* SCREENS */
+.screen{display:none;flex-direction:column;height:820px;overflow:hidden;animation:fadeIn .2s;}
+.screen.active{display:flex;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.scroll-body{flex:1;overflow-y:auto;padding:10px 10px 74px;}
+.scroll-body::-webkit-scrollbar{display:none;}
+.scroll-body.no-nav{padding-bottom:16px;}
+
+/* TOPNAV */
+.topnav{background:var(--primary);padding:14px 13px 10px;display:flex;align-items:center;gap:7px;flex-shrink:0;}
+.logo-wrap{width:32px;height:32px;background:rgba(255,255,255,.18);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.brand{font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:#fff;flex:1;}
+.icon-btn{width:32px;height:32px;background:rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;color:#fff;font-size:15px;position:relative;flex-shrink:0;}
+.badge{width:7px;height:7px;background:#ff3b30;border-radius:50%;position:absolute;top:4px;right:4px;border:1.5px solid var(--primary);}
+
+/* PAGE HEADER */
+.page-header{background:var(--primary);padding:13px;display:flex;align-items:center;gap:9px;flex-shrink:0;}
+.page-header h2{color:#fff;font-size:17px;font-weight:800;font-family:'Nunito',sans-serif;flex:1;}
+.back-btn{width:30px;height:30px;background:rgba(255,255,255,.2);border-radius:8px;border:none;color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+/* BOTTOM NAV */
+.bottom-nav{position:absolute;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);display:flex;align-items:center;padding:6px 0 10px;z-index:100;}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:3px 0;}
+.nvi{font-size:18px;}
+.nvl{font-size:9px;font-weight:600;color:var(--muted);}
+.nav-item.active .nvi,.nav-item.active .nvl{color:var(--primary);}
+.nav-dot{width:4px;height:4px;background:var(--primary);border-radius:50%;display:none;}
+.nav-item.active .nav-dot{display:block;}
+
+/* SUBPAGES */
+.subpage{position:absolute;inset:0;background:var(--bg);display:none;flex-direction:column;z-index:50;animation:slideIn .22s cubic-bezier(.4,0,.2,1);}
+.subpage.open{display:flex;}
+@keyframes slideIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
+
+/* PANELS */
+.panel{position:absolute;inset:0;background:var(--bg);display:none;flex-direction:column;z-index:60;}
+.panel.open{display:flex;animation:slideDown .2s cubic-bezier(.4,0,.2,1);}
+@keyframes slideDown{from{transform:translateY(-100%)}to{transform:translateY(0)}}
+
+.menu-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);display:none;flex-direction:column;z-index:70;}
+.menu-overlay.open{display:flex;animation:fadeIn .2s;}
+.menu-sheet{background:#fff;padding:13px;flex-shrink:0;}
+.menu-item{display:flex;align-items:center;gap:11px;padding:12px 3px;border-bottom:1px solid var(--border);cursor:pointer;}
+.menu-item:last-child{border-bottom:none;}
+.mi-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.mi-label{font-size:13px;font-weight:600;color:var(--text);flex:1;}
+
+/* MODALS */
+.modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,.55);z-index:200;display:none;align-items:flex-end;}
+.modal-overlay.open{display:flex;animation:fadeIn .2s;}
+.modal-sheet{background:#fff;width:100%;border-radius:22px 22px 0 0;padding:16px;max-height:90%;overflow-y:auto;animation:slideUp .28s cubic-bezier(.4,0,.2,1);}
+.modal-sheet::-webkit-scrollbar{display:none;}
+.m-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 13px;}
+.m-title{font-size:16px;font-weight:800;color:var(--text);font-family:'Nunito',sans-serif;margin-bottom:4px;}
+.m-sub{font-size:12px;color:var(--muted);margin-bottom:13px;}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+/* FORMS */
+.fg{margin-bottom:10px;}
+.fg label{font-size:10px;font-weight:700;color:var(--muted);display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:.4px;}
+.fg input,.fg select,.fg textarea{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;background:#fff;color:var(--text);transition:border-color .2s;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--primary);}
+.fg textarea{resize:none;height:60px;}
+.primary-btn{width:100%;padding:12px;background:var(--primary);color:#fff;border:none;border-radius:11px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:background .2s;}
+.primary-btn:hover{background:var(--primary-dark);}
+.secondary-btn{width:100%;padding:10px;background:transparent;color:var(--primary);border:2px solid var(--primary);border-radius:11px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:7px;}
+.m-cancel{width:100%;padding:10px;background:transparent;color:var(--muted);border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:5px;}
+.divider{text-align:center;margin:10px 0;font-size:11px;color:var(--muted);position:relative;}
+.divider::before,.divider::after{content:'';position:absolute;top:50%;width:38%;height:1px;background:var(--border);}
+.divider::before{left:0;}.divider::after{right:0;}
+
+/* AUTH */
+.auth-hero{background:linear-gradient(148deg,var(--primary),#5b6cf8);padding:34px 20px 44px;text-align:center;flex-shrink:0;}
+.auth-logo{font-size:42px;margin-bottom:7px;}
+.auth-title{font-family:'Nunito',sans-serif;font-size:26px;font-weight:900;color:#fff;}
+.auth-sub{color:rgba(255,255,255,.72);font-size:12px;margin-top:3px;}
+.auth-body{flex:1;overflow-y:auto;padding:0 15px 22px;margin-top:-22px;}
+.auth-body::-webkit-scrollbar{display:none;}
+.auth-card{background:#fff;border-radius:18px;padding:18px;box-shadow:0 8px 28px rgba(0,0,0,.13);}
+.auth-tabs{display:flex;background:var(--bg);border-radius:9px;padding:3px;margin-bottom:14px;}
+.auth-tab{flex:1;padding:7px;border:none;background:transparent;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--muted);transition:all .2s;}
+.auth-tab.active{background:#fff;color:var(--primary);box-shadow:0 2px 7px rgba(0,0,0,.08);}
+.role-sel{display:flex;gap:7px;margin-bottom:12px;}
+.role-opt{flex:1;padding:9px 5px;border:2px solid var(--border);border-radius:9px;text-align:center;cursor:pointer;transition:all .2s;}
+.role-opt.active{border-color:var(--primary);background:var(--primary-light);}
+.role-opt .r-icon{font-size:20px;display:block;margin-bottom:2px;}
+.role-opt .r-lbl{font-size:10px;font-weight:700;color:var(--text);}
+.role-opt.active .r-lbl{color:var(--primary);}
+.switch-auth{text-align:center;margin-top:11px;font-size:12px;color:var(--muted);}
+.switch-auth span{color:var(--primary);font-weight:700;cursor:pointer;}
+
+/* SEARCH */
+.search-wrap{display:flex;align-items:center;background:#fff;border-radius:50px;padding:9px 13px;gap:7px;box-shadow:0 2px 8px rgba(0,0,0,.07);margin-bottom:10px;}
+.search-wrap .dot{width:7px;height:7px;background:var(--green);border-radius:50%;flex-shrink:0;}
+.search-wrap input{flex:1;border:none;outline:none;font-size:13px;color:var(--text);font-family:'DM Sans',sans-serif;background:transparent;}
+
+/* FILTER BAR */
+.filter-bar{display:flex;gap:6px;margin-bottom:10px;overflow-x:auto;padding-bottom:2px;}
+.filter-bar::-webkit-scrollbar{display:none;}
+.f-btn{display:flex;align-items:center;gap:4px;padding:5px 11px;border-radius:50px;border:1.5px solid var(--border);background:#fff;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--text);transition:all .18s;font-family:'DM Sans',sans-serif;flex-shrink:0;}
+.f-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+.f-btn.loc-active{background:#059669;color:#fff;border-color:#059669;}
+
+/* SERVICE CARD */
+.service-card{background:#fff;border-radius:var(--rs);padding:11px;display:flex;align-items:center;gap:9px;margin-bottom:8px;box-shadow:var(--shadow);cursor:pointer;transition:transform .12s;}
+.service-card:active{transform:scale(.98);}
+.svc-icon{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0;}
+.svc-name{font-size:13px;font-weight:700;color:var(--text);}
+.svc-meta{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px;margin-top:1px;}
+.stars{color:#f59e0b;font-size:10px;}
+.svc-actions{display:flex;gap:5px;flex-shrink:0;}
+.btn-call{padding:6px 9px;border-radius:50px;font-size:11px;font-weight:700;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;background:var(--primary-light);color:var(--primary);}
+.btn-book{padding:6px 9px;border-radius:50px;font-size:11px;font-weight:700;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;background:var(--primary);color:#fff;}
+.cat-label{display:flex;align-items:center;gap:6px;font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin:10px 0 5px;}
+.cat-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;}
+.sec-label{font-size:10px;font-weight:800;letter-spacing:1px;color:var(--muted);text-transform:uppercase;}
+.see-all{font-size:12px;font-weight:700;color:var(--primary);cursor:pointer;}
+
+/* MAP */
+.map-card{border-radius:var(--r);overflow:hidden;margin-bottom:10px;position:relative;height:155px;}
+.map-card iframe{width:100%;height:100%;border:none;pointer-events:none;}
+.map-view-btn{position:absolute;bottom:8px;left:8px;background:#fff;border-radius:50px;padding:5px 11px;font-size:11px;font-weight:700;display:flex;align-items:center;gap:5px;box-shadow:0 2px 8px rgba(0,0,0,.15);cursor:pointer;border:none;font-family:'DM Sans',sans-serif;color:var(--text);}
+.map-full{flex:1;position:relative;overflow:hidden;}
+.map-full iframe{width:100%;height:100%;border:none;}
+.map-search-bar{position:absolute;top:10px;left:10px;right:10px;display:flex;align-items:center;background:#fff;border-radius:50px;padding:8px 13px;gap:7px;box-shadow:0 4px 16px rgba(0,0,0,.15);z-index:10;}
+.map-search-bar input{flex:1;border:none;outline:none;font-size:12px;color:var(--text);font-family:'DM Sans',sans-serif;background:transparent;}
+
+/* DETAIL */
+.detail-hero{background:var(--primary);padding:13px 13px 44px;flex-shrink:0;}
+.detail-hero h2{color:#fff;font-size:19px;font-weight:800;font-family:'Nunito',sans-serif;}
+.ver-badge{display:inline-flex;align-items:center;gap:3px;background:rgba(255,255,255,.2);border-radius:20px;padding:3px 9px;font-size:10px;color:#fff;font-weight:600;margin-top:4px;}
+.detail-body{flex:1;overflow-y:auto;padding:0 10px 78px;margin-top:-32px;}
+.detail-body::-webkit-scrollbar{display:none;}
+.photo-card{background:#fff;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);margin-bottom:10px;}
+.photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;height:144px;}
+.photo-main{grid-row:span 2;}
+.photo-slot{background:linear-gradient(135deg,#e8eeff,#d0d9f5);display:flex;align-items:center;justify-content:center;font-size:32px;}
+.info-card{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:9px;overflow:hidden;}
+.info-row{display:flex;align-items:center;gap:10px;padding:11px 12px;border-bottom:1px solid var(--border);}
+.info-row:last-child{border-bottom:none;}
+.info-icon{width:32px;height:32px;background:var(--primary-light);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.info-text .lbl{font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;}
+.info-text .val{font-size:13px;color:var(--text);font-weight:700;}
+.info-action{margin-left:auto;padding:5px 10px;background:var(--primary);color:#fff;border-radius:50px;border:none;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;flex-shrink:0;}
+.detail-acts{display:flex;gap:8px;margin:10px 0;}
+.detail-acts button{flex:1;padding:11px;border-radius:var(--rs);font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;}
+
+/* RATING */
+.rating-widget{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:9px;padding:13px;}
+.rating-widget h3{font-size:13px;font-weight:800;color:var(--text);margin-bottom:9px;}
+.star-input{display:flex;gap:5px;font-size:26px;cursor:pointer;justify-content:center;}
+.star-input span{transition:transform .12s;display:inline-block;}
+.star-input span:hover{transform:scale(1.15);}
+.avg-row{display:flex;align-items:center;gap:9px;padding:11px 12px;border-bottom:1px solid var(--border);}
+.avg-num{font-size:34px;font-weight:900;color:var(--text);font-family:'Nunito',sans-serif;line-height:1;}
+.avg-bars{flex:1;}
+.bar-row{display:flex;align-items:center;gap:4px;margin-bottom:2px;}
+.bar-lbl{font-size:9px;color:var(--muted);width:8px;}
+.bar-bg{flex:1;height:4px;background:var(--bg);border-radius:2px;overflow:hidden;}
+.bar-fill{height:100%;background:var(--amber);border-radius:2px;transition:width .5s;}
+.review-item{padding:9px 12px;border-bottom:1px solid var(--border);}
+.review-item:last-child{border-bottom:none;}
+.review-top{display:flex;align-items:center;gap:6px;margin-bottom:3px;}
+.review-av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0;}
+.review-name{font-size:12px;font-weight:700;color:var(--text);}
+.review-txt{font-size:11px;color:var(--muted);line-height:1.45;}
+
+/* PROFILE */
+.profile-hero{background:linear-gradient(140deg,var(--primary),#5b6cf8);padding:24px 15px 42px;text-align:center;flex-shrink:0;}
+.profile-av{width:68px;height:68px;border-radius:50%;background:rgba(255,255,255,.22);border:3px solid rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 8px;}
+.profile-name{color:#fff;font-size:17px;font-weight:800;font-family:'Nunito',sans-serif;}
+.profile-email{color:rgba(255,255,255,.72);font-size:11px;margin-top:2px;}
+.role-badge-pill{display:inline-block;background:rgba(255,255,255,.18);border-radius:20px;padding:3px 10px;font-size:10px;color:#fff;font-weight:700;margin-top:4px;}
+.profile-body{flex:1;overflow-y:auto;padding:0 10px 78px;margin-top:-24px;}
+.profile-body::-webkit-scrollbar{display:none;}
+.profile-card{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:8px;overflow:hidden;}
+.profile-row{display:flex;align-items:center;gap:10px;padding:12px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .12s;}
+.profile-row:hover{background:#f9fafb;}
+.profile-row:last-child{border-bottom:none;}
+.p-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.p-label{flex:1;font-size:13px;font-weight:600;color:var(--text);}
+.p-arr{color:var(--muted);font-size:15px;}
+.p-badge{background:var(--primary);color:#fff;border-radius:50px;padding:2px 7px;font-size:9px;font-weight:800;margin-right:3px;}
+
+/* PROVIDER */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.stat-card{background:#fff;border-radius:var(--rs);padding:12px;box-shadow:var(--shadow);text-align:center;}
+.stat-num{font-size:24px;font-weight:900;color:var(--primary);font-family:'Nunito',sans-serif;}
+.stat-lbl{font-size:10px;color:var(--muted);font-weight:600;margin-top:1px;}
+.status-chip{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:50px;font-size:10px;font-weight:800;}
+.chip-pending{background:var(--amber-light);color:#92400e;}
+.chip-approved{background:var(--green-light);color:var(--green);}
+.chip-rejected{background:var(--red-light);color:var(--red);}
+.bk-card{background:#fff;border-radius:var(--rs);padding:12px;margin-bottom:7px;box-shadow:var(--shadow);}
+.bk-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.bk-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.bk-status{margin-left:auto;padding:3px 8px;border-radius:50px;font-size:9px;font-weight:800;}
+.confirmed{background:var(--green-light);color:var(--green);}
+.pending-s{background:var(--amber-light);color:#92400e;}
+.completed{background:#f3f4f6;color:var(--muted);}
+.cancelled{background:var(--red-light);color:var(--red);}
+.bk-acts{display:flex;gap:5px;}
+.bk-acts button{flex:1;padding:6px;border-radius:7px;border:none;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;}
+
+/* ADMIN */
+.admin-card{background:#fff;border-radius:var(--rs);box-shadow:var(--shadow);margin-bottom:7px;overflow:hidden;}
+.admin-row{display:flex;align-items:center;gap:9px;padding:11px 12px;border-bottom:1px solid var(--border);}
+.admin-row:last-child{border-bottom:none;}
+.admin-acts{display:flex;gap:5px;}
+.approve-btn{padding:5px 9px;background:var(--green-light);color:var(--green);border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;}
+.reject-btn{padding:5px 9px;background:var(--red-light);color:var(--red);border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;}
+.delete-btn{padding:5px 9px;background:#fee2e2;color:#b91c1c;border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;}
+
+/* NOTIF */
+.notif-item{background:#fff;border-radius:var(--rs);padding:11px 12px;display:flex;gap:10px;margin-bottom:6px;cursor:pointer;box-shadow:var(--shadow);align-items:flex-start;}
+.notif-item.unread{border-left:3px solid var(--primary);}
+.n-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+
+/* CALL BOX */
+.ph-box{display:flex;align-items:center;gap:10px;padding:12px;background:var(--primary-light);border-radius:10px;margin-bottom:10px;}
+.ph-num{font-size:17px;font-weight:800;color:var(--primary);font-family:'Nunito',sans-serif;}
+.call-btn{width:100%;padding:13px;background:var(--green);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;}
+
+/* OFFERS */
+.offer-card{background:#fff;border-radius:var(--rs);padding:12px;margin-bottom:7px;box-shadow:var(--shadow);display:flex;align-items:center;gap:9px;}
+.offer-emoji{font-size:26px;flex-shrink:0;}
+.use-btn{padding:7px 11px;background:var(--primary);color:#fff;border:none;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0;}
+
+/* TOAST */
+.toast{position:absolute;top:64px;left:10px;right:10px;background:#111;color:#fff;border-radius:10px;padding:11px 13px;font-size:12px;font-weight:700;display:flex;align-items:center;gap:7px;z-index:500;opacity:0;pointer-events:none;transition:opacity .28s;box-shadow:0 4px 18px rgba(0,0,0,.3);}
+.toast.show{opacity:1;}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:36px 18px;color:var(--muted);}
+.empty-state .e-icon{font-size:44px;margin-bottom:8px;}
+.empty-state p{font-size:13px;}
+
+/* CONFIRM DIALOG */
+.confirm-overlay{position:absolute;inset:0;background:rgba(0,0,0,.55);z-index:300;display:none;align-items:center;justify-content:center;padding:20px;}
+.confirm-overlay.open{display:flex;animation:fadeIn .15s;}
+.confirm-box{background:#fff;border-radius:18px;padding:22px;width:100%;max-width:300px;text-align:center;}
+.confirm-box h3{font-size:15px;font-weight:800;color:var(--text);margin-bottom:6px;font-family:'Nunito',sans-serif;}
+.confirm-box p{font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.5;}
+.confirm-acts{display:flex;gap:8px;}
+.confirm-acts button{flex:1;padding:10px;border-radius:9px;border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;}
+
+/* SETTINGS ROWS */
+.set-row{display:flex;align-items:center;gap:10px;padding:12px;border-bottom:1px solid var(--border);cursor:pointer;}
+.set-row:last-child{border-bottom:none;}
+.s-ico{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.s-lbl{flex:1;font-size:13px;font-weight:600;color:var(--text);}
+.s-val{font-size:11px;color:var(--muted);margin-right:4px;}
+.toggle{width:38px;height:21px;background:var(--border);border-radius:50px;position:relative;cursor:pointer;transition:background .22s;flex-shrink:0;}
+.toggle.on{background:var(--primary);}
+.toggle::after{content:'';width:15px;height:15px;background:#fff;border-radius:50%;position:absolute;top:3px;left:3px;transition:transform .22s;}
+.toggle.on::after{transform:translateX(17px);}
+</style>
+</head>
+<body>
+<div class="phone">
+
+<!-- TOAST -->
+<div class="toast" id="toast"><span id="toastMsg"></span></div>
+
+<!-- CONFIRM DIALOG -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <h3 id="confirmTitle">Are you sure?</h3>
+    <p id="confirmMsg">This action cannot be undone.</p>
+    <div class="confirm-acts">
+      <button style="background:var(--bg);color:var(--text);" onclick="closeConfirm()">Cancel</button>
+      <button style="background:var(--red);color:#fff;" id="confirmOkBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- CALL MODAL -->
+<div class="modal-overlay" id="callModal" onclick="if(event.target===this)closeModal('callModal')">
+  <div class="modal-sheet">
+    <div class="m-handle"></div>
+    <div class="m-title" id="cmName"></div>
+    <div class="m-sub">📍 CityServe · Verified Listing</div>
+    <div class="ph-box"><div style="font-size:22px;">📞</div><div><div class="ph-num" id="cmNum"></div><div style="font-size:11px;color:var(--muted);">Business Number</div></div></div>
+    <button class="call-btn" onclick="dialCall()">📲 Call Now</button>
+    <button class="m-cancel" onclick="closeModal('callModal')">Cancel</button>
+  </div>
+</div>
+
+<!-- BOOK MODAL -->
+<div class="modal-overlay" id="bookModal" onclick="if(event.target===this)closeModal('bookModal')">
+  <div class="modal-sheet">
+    <div class="m-handle"></div>
+    <div class="m-title">Book a Service</div>
+    <div class="m-sub" id="bmSub"></div>
+    <div class="fg"><label>Your Name</label><input type="text" id="bkName" placeholder="Full name"></div>
+    <div class="fg"><label>Phone Number</label><input type="tel" id="bkPhone" placeholder="+91 XXXXX XXXXX"></div>
+    <div class="fg"><label>Date & Time</label><input type="datetime-local" id="bkDate"></div>
+    <div class="fg"><label>Address</label><input type="text" id="bkAddr" placeholder="Your address"></div>
+    <div class="fg"><label>Note (Optional)</label><textarea id="bkNote" placeholder="Special requirements..."></textarea></div>
+    <button class="primary-btn" onclick="submitBook()">Confirm Booking</button>
+    <button class="m-cancel" onclick="closeModal('bookModal')">Cancel</button>
+  </div>
+</div>
+
+<!-- RATING MODAL -->
+<div class="modal-overlay" id="ratingModal" onclick="if(event.target===this)closeModal('ratingModal')">
+  <div class="modal-sheet">
+    <div class="m-handle"></div>
+    <div class="m-title">Rate & Review</div>
+    <div class="m-sub" id="rmSub"></div>
+    <div style="margin-bottom:12px;">
+      <div class="star-input" id="starInput">
+        <span onclick="setRating(1)">☆</span><span onclick="setRating(2)">☆</span>
+        <span onclick="setRating(3)">☆</span><span onclick="setRating(4)">☆</span>
+        <span onclick="setRating(5)">☆</span>
+      </div>
+    </div>
+    <div class="fg"><label>Your Comment</label><textarea id="ratingComment" placeholder="Tell others about your experience..."></textarea></div>
+    <button class="primary-btn" onclick="submitRating()">Submit Review</button>
+    <button class="m-cancel" onclick="closeModal('ratingModal')">Cancel</button>
+  </div>
+</div>
+
+<!-- NOTIFICATION PANEL -->
+<div class="panel" id="notifPanel">
+  <div class="topnav">
+    <button class="back-btn" onclick="closePanel('notifPanel')">←</button>
+    <span style="color:#fff;font-family:'Nunito',sans-serif;font-size:16px;font-weight:800;flex:1;">Notifications</span>
+    <button class="icon-btn" style="width:auto;padding:0 8px;font-size:11px;font-weight:700;" onclick="clearNotifs()">Clear All</button>
+  </div>
+  <div class="scroll-body no-nav" id="notifList"></div>
+</div>
+
+<!-- MENU PANEL -->
+<div class="menu-overlay" id="menuPanel" onclick="if(event.target===this)closePanel('menuPanel')">
+  <div class="menu-sheet">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;">
+      <div style="font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;color:var(--text);">Menu</div>
+      <button style="border:none;background:none;font-size:17px;cursor:pointer;" onclick="closePanel('menuPanel')">✕</button>
+    </div>
+    <div class="menu-item" onclick="closePanel('menuPanel');goScreen('screen-home')"><div class="mi-icon" style="background:#eef0fd;">🏠</div><div class="mi-label">Home</div><span style="color:var(--muted)">›</span></div>
+    <div class="menu-item" onclick="closePanel('menuPanel');goScreen('screen-map')"><div class="mi-icon" style="background:#fef9c3;">🗺️</div><div class="mi-label">Map View</div><span style="color:var(--muted)">›</span></div>
+    <div class="menu-item" onclick="closePanel('menuPanel');goScreen('screen-services')"><div class="mi-icon" style="background:#dcfce7;">🛎️</div><div class="mi-label">All Services</div><span style="color:var(--muted)">›</span></div>
+    <div class="menu-item" onclick="closePanel('menuPanel');openSP('sp-bookings')"><div class="mi-icon" style="background:#fce7f3;">📅</div><div class="mi-label">My Bookings</div><span style="color:var(--muted)">›</span></div>
+    <div class="menu-item" onclick="closePanel('menuPanel');openSP('sp-offers')"><div class="mi-icon" style="background:#fff7ed;">🎁</div><div class="mi-label">Offers & Deals</div><span style="color:var(--muted)">›</span></div>
+    <div id="menuAdmin" class="menu-item" style="display:none;" onclick="closePanel('menuPanel');goScreen('screen-admin')"><div class="mi-icon" style="background:#fee2e2;">🛡️</div><div class="mi-label" style="color:var(--red)">Admin Panel</div><span style="color:var(--red)">›</span></div>
+    <div id="menuProvider" class="menu-item" style="display:none;" onclick="closePanel('menuPanel');goScreen('screen-provider')"><div class="mi-icon" style="background:#dcfce7;">🏪</div><div class="mi-label" style="color:var(--green)">Provider Dashboard</div><span style="color:var(--green)">›</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     HOME
+═══════════════════════════════════════════════ -->
+<div class="screen active" id="screen-home">
+  <div class="topnav">
+    <div class="logo-wrap">🏙️</div>
+    <div class="brand">CityServe</div>
+    <button class="icon-btn" onclick="openNotifs()">🔔<span class="badge" id="notifBadge" style="display:none;"></span></button>
+    <button class="icon-btn" onclick="openPanel('menuPanel')">☰</button>
+  </div>
+  <div class="scroll-body">
+    <div style="padding:5px 1px 9px;">
+      <div style="font-size:13px;color:var(--muted);">Hello, <strong id="homeGreetName" style="color:var(--text);">Guest</strong> 👋</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:1px;">📍 Jharkhand, India</div>
+    </div>
+    <div class="search-wrap">
+      <div class="dot"></div>
+      <input type="text" id="homeSearch" oninput="renderHome()" placeholder='Search "electrician", "pizza"...'>
+      <span>🔍</span>
+    </div>
+    <!-- CATEGORY FILTER -->
+    <div class="filter-bar" id="homeCatFilter"></div>
+    <!-- LOCATION FILTER -->
+    <div class="filter-bar" id="homeLocFilter"></div>
+    <!-- MAP PREVIEW -->
+    <div class="map-card" onclick="goScreen('screen-map')" style="cursor:pointer;">
+      <iframe src="https://maps.google.com/maps?q=Jharkhand,India&t=&z=8&ie=UTF8&iwloc=&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <button class="map-view-btn" onclick="event.stopPropagation();goScreen('screen-map')">📍 Full Map View</button>
+    </div>
+    <div class="sec-hdr"><span class="sec-label">Nearby Services</span><a class="see-all" onclick="goScreen('screen-services')">See all →</a></div>
+    <div id="servicesList"></div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item active" onclick="navTo(this,'screen-home')"><div class="nvi">🏠</div><div class="nvl">Home</div><div class="nav-dot"></div></div>
+    <div class="nav-item" onclick="navTo(this,'screen-map')"><div class="nvi">🗺️</div><div class="nvl">Map</div><div class="nav-dot"></div></div>
+    <div class="nav-item" onclick="navTo(this,'screen-services')"><div class="nvi">🛎️</div><div class="nvl">Services</div><div class="nav-dot"></div></div>
+    <div class="nav-item" onclick="navTo(this,'screen-profile')"><div class="nvi">👤</div><div class="nvl">Profile</div><div class="nav-dot"></div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     AUTH
+═══════════════════════════════════════════════ -->
+<div class="screen" id="screen-auth">
+  <div class="auth-hero">
+    <div class="auth-logo">🏙️</div>
+    <div class="auth-title">CityServe</div>
+    <div class="auth-sub">Local Services · Jharkhand</div>
+  </div>
+  <div class="auth-body">
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Login</button>
+        <button class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Register</button>
+      </div>
+
+      <!-- LOGIN -->
+      <div id="form-login">
+        <div class="fg"><label>Email</label><input type="email" id="loginEmail" placeholder="you@email.com"></div>
+        <div class="fg"><label>Password</label><input type="password" id="loginPass" placeholder="••••••••"></div>
+        <button class="primary-btn" onclick="doLogin()">Login →</button>
+        <div class="divider">or</div>
+        <button class="secondary-btn" onclick="doGuestLogin()">Continue as Guest</button>
+        <div class="switch-auth">No account? <span onclick="switchAuthTab('register')">Register</span></div>
+      </div>
+
+      <!-- REGISTER -->
+      <div id="form-register" style="display:none;">
+        <div style="margin-bottom:11px;">
+          <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:6px;">Register As</div>
+          <div class="role-sel">
+            <div class="role-opt active" id="role-user" onclick="selectRole('user')"><span class="r-icon">👤</span><span class="r-lbl">User</span></div>
+            <div class="role-opt" id="role-provider" onclick="selectRole('provider')"><span class="r-icon">🏪</span><span class="r-lbl">Provider</span></div>
+            <div class="role-opt" id="role-admin" onclick="selectRole('admin')"><span class="r-icon">🛡️</span><span class="r-lbl">Admin</span></div>
+          </div>
+        </div>
+        <div class="fg"><label>Full Name *</label><input type="text" id="regName" placeholder="Your name"></div>
+        <div class="fg"><label>Email *</label><input type="email" id="regEmail" placeholder="you@email.com"></div>
+        <div class="fg"><label>Phone</label><input type="tel" id="regPhone" placeholder="+91 XXXXX XXXXX"></div>
+        <div class="fg"><label>City</label>
+          <select id="regCity">
+            <option>Jamshedpur</option><option>Ranchi</option><option>Dhanbad</option>
+            <option>Bokaro</option><option>Hazaribagh</option><option>Deoghar</option>
+            <option>Giridih</option><option>Dumka</option><option>Phusro</option>
+          </select>
+        </div>
+
+        <!-- PROVIDER FIELDS -->
+        <div id="providerFields" style="display:none;">
+          <div style="height:1px;background:var(--border);margin:10px 0;"></div>
+          <div style="font-size:10px;font-weight:800;color:var(--primary);text-transform:uppercase;margin-bottom:9px;">Business Details</div>
+          <div class="fg"><label>Business Name *</label><input type="text" id="regBizName" placeholder="Your business name"></div>
+          <div class="fg"><label>Category</label>
+            <select id="regBizCat">
+              <option value="food">🍔 Food</option><option value="electric">⚡ Electrician</option>
+              <option value="transport">🚗 Transport</option><option value="plumber">🔧 Plumber</option>
+              <option value="salon">💇 Salon</option><option value="medical">🏥 Medical</option>
+              <option value="tutor">📚 Tutor</option><option value="catering">🍽️ Catering</option>
+              <option value="cleaning">🧹 Cleaning</option><option value="laundry">👕 Laundry</option>
+              <option value="security">🛡️ Security</option>
+            </select>
+          </div>
+          <div class="fg"><label>Business Address *</label><input type="text" id="regBizAddr" placeholder="Full address"></div>
+          <div class="fg"><label>Description</label><textarea id="regBizDesc" placeholder="Describe your services..."></textarea></div>
+          <div class="fg"><label>Price Range</label><input type="text" id="regBizPrice" placeholder="₹200–₹2000"></div>
+          <div style="background:var(--amber-light);border-radius:8px;padding:9px;font-size:11px;color:#92400e;margin-bottom:10px;">⏳ Listing will be reviewed by admin before going live.</div>
+        </div>
+
+        <!-- ADMIN FIELDS -->
+        <div id="adminFields" style="display:none;">
+          <div style="height:1px;background:var(--border);margin:10px 0;"></div>
+          <div class="fg"><label>Admin Secret Key *</label><input type="password" id="regAdminKey" placeholder="Enter secret key"></div>
+          <div style="background:var(--red-light);border-radius:8px;padding:9px;font-size:11px;color:var(--red);margin-bottom:10px;">🔐 Use key: <strong>ADMIN2024</strong> for demo purposes.</div>
+        </div>
+
+        <div class="fg"><label>Password *</label><input type="password" id="regPass" placeholder="Create password (min 4 chars)"></div>
+        <button class="primary-btn" onclick="doRegister()">Create Account →</button>
+        <div class="switch-auth">Already registered? <span onclick="switchAuthTab('login')">Login</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     MAP
+═══════════════════════════════════════════════ -->
+<div class="screen" id="screen-map">
+  <div class="topnav">
+    <button class="back-btn" onclick="goBack()">←</button>
+    <div class="brand" style="font-size:16px;">Nearby Map</div>
+    <button class="icon-btn" onclick="openPanel('menuPanel')">☰</button>
+  </div>
+  <div class="map-full">
+    <iframe id="mapIframe"
+      src="https://maps.google.com/maps?q=Jamshedpur,Jharkhand,India&t=m&z=13&ie=UTF8&iwloc=&output=embed"
+      allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <div class="map-search-bar">
+      <span>🔍</span>
+      <input type="text" id="mapSearchInput" placeholder="Search anywhere in Jharkhand..." onkeydown="if(event.key==='Enter')searchOnMap()">
+      <span style="cursor:pointer;font-size:16px;" onclick="searchOnMap()">🎯</span>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="navTo(this,'screen-home')"><div class="nvi">🏠</div><div class="nvl">Home</div><div class="nav-dot"></div></div>
+    <div class="nav-item active" onclick="navTo(this,'screen-map')"><div class="nvi">🗺️</div><div class="nvl">Map</div><div class="nav-dot"></div></div>
+    <div class="nav-item" onclick="navTo(this,'screen-services')"><div class="nvi">🛎️</div><div class="nvl">Services</div><div class="nav-dot"></div></div>
+    <div class="nav-item" onclick="navTo(this,'screen-profile')"><div class="nvi">👤</div><div class="nvl">Profile</div><div class="nav-dot"></div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     ALL SERVICES
+═══════════════════════════════════════════════ -->
+<div class="screen" id="screen-services">
+  <div class="page-header">
+    <button class="back-btn" onclick="goBack()">←</button>
+    <h2>All Services</h2>
+  </div>
+  <div class="scroll-body">
+    <div class="search-wrap"><div class="dot"></div><input type="text" id="svcSearch" placeholder="Search services..." oninput="renderAll()"><span>🔍</span></div>
+    <div class="filter-bar" id="svcCatFilter"></div>
+    <div class="filter-bar" id="svcLocFilter"></div>
+    <div id="allList"></div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="navTo(this,'screen-home')"><div class="nvi">🏠</div><div class="nvl">Home</div><div class="nav-dot"></div></div>
+    <div class="nav-item" onclick="navTo(this,'screen-map')"><div class="nvi">🗺️</div><div class="nvl">Map</div><div class="nav-dot"></div></div>
+    <div class="nav-item active" onclick="navTo(this,'screen-services')"><div class="nvi">🛎️</div><div class="nvl">Services</div><div class="nav-dot"></div></div>
+    <div class="nav-item" onclick="navTo(this,'screen-profile')"><div class="nvi">👤</div><div class="nvl">Profile</div><div class="nav-dot"></div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     DETAIL
+═══════════════════════════════════════════════ -->
+<div class="screen" id="screen-detail">
+  <div class="detail-hero">
+    <button class="back-btn" onclick="goBack()" style="margin-bottom:10px;">←</button>
+    <h2 id="dName"></h2>
+    <div class="ver-badge" id="dVer">✅ Verified</div>
+  </div>
+  <div class="detail-body">
+    <div class="photo-card">
+      <div class="photo-grid">
+        <div class="photo-slot photo-main" id="dPhoto" style="font-size:50px;"></div>
+        <div class="photo-slot" style="font-size:24px;">🏠</div>
+        <div class="photo-slot" style="font-size:24px;">⭐</div>
+      </div>
+    </div>
+    <div class="detail-acts">
+      <button class="btn-call" style="background:var(--primary-light);color:var(--primary);" onclick="openCallDetail()">📞 Call</button>
+      <button class="btn-book" style="background:var(--primary);color:#fff;" onclick="openBookDetail()">📅 Book Now</button>
+    </div>
+    <div class="info-card">
+      <div class="info-row"><div class="info-icon">📞</div><div class="info-text"><div class="lbl">PHONE</div><div class="val" id="dPhone"></div></div><button class="info-action" onclick="openCallDetail()">Call</button></div>
+      <div class="info-row"><div class="info-icon">📧</div><div class="info-text"><div class="lbl">EMAIL</div><div class="val" id="dEmail"></div></div><button class="info-action" onclick="copyEmail()">Copy</button></div>
+      <div class="info-row"><div class="info-icon">📍</div><div class="info-text"><div class="lbl">ADDRESS</div><div class="val" id="dAddr"></div></div><button class="info-action" onclick="searchAddr()">Map</button></div>
+      <div class="info-row"><div class="info-icon">⏰</div><div class="info-text"><div class="lbl">HOURS</div><div class="val" id="dHours"></div></div></div>
+      <div class="info-row"><div class="info-icon">💰</div><div class="info-text"><div class="lbl">PRICE</div><div class="val" id="dPrice"></div></div></div>
+    </div>
+    <div class="info-card" style="padding:12px;">
+      <div style="font-size:11px;font-weight:800;color:var(--text);margin-bottom:5px;">About</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.55;" id="dAbout"></div>
+    </div>
+    <div class="rating-widget">
+      <h3>Customer Reviews</h3>
+      <div class="avg-row">
+        <div><div class="avg-num" id="avgRating">—</div><div style="font-size:10px;color:var(--muted);" id="totalReviews">0 reviews</div></div>
+        <div class="avg-bars" id="avgBars"></div>
+      </div>
+      <div id="dReviews"></div>
+      <button class="primary-btn" style="margin-top:11px;" onclick="openRatingModal()">✍️ Write a Review</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PROFILE
+═══════════════════════════════════════════════ -->
+<div class="screen" id="screen-profile">
+  <div class="profile-hero">
+    <div class="profile-av" id="profAv">👤</div>
+    <div class="profile-name" id="profName">Guest</div>
+    <div class="profile-email" id="profEmail">Not logged in</div>
+    <div class="role-badge-pill" id="profRole">👤 Guest</div>
+  </div>
+  <div class="profile-body">
+    <div id="guestPrompt" class="profile-card">
+      <div class="profile-row" onclick="goScreen('screen-auth')"><div class="p-icon" style="background:#eef0fd;">🔑</div><div class="p-label" style="color:var(--primary);">Login / Register</div><div class="p-arr">›</div></div>
+    </div>
+    <div id="loggedProfile" style="display:none;flex-direction:column;">
+      <div class="profile-card">
+        <div class="profile-row" onclick="openSP('sp-bookings')"><div class="p-icon" style="background:#eef0fd;">📅</div><div class="p-label">My Bookings</div><span class="p-badge" id="bkBadge">0</span><div class="p-arr">›</div></div>
+        <div class="profile-row" onclick="openSP('sp-saved')"><div class="p-icon" style="background:#fef9c3;">⭐</div><div class="p-label">Saved Services</div><div class="p-arr">›</div></div>
+        <div class="profile-row" onclick="openSP('sp-myreviews')"><div class="p-icon" style="background:#dcfce7;">💬</div><div class="p-label">My Reviews</div><div class="p-arr">›</div></div>
+        <div class="profile-row" onclick="openSP('sp-offers')"><div class="p-icon" style="background:#fff7ed;">🎁</div><div class="p-label">Offers & Deals</div><span class="p-badge">5</span><div class="p-arr">›</div></div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-row" onclick="openSP('sp-editprofile')"><div class="p-icon" style="background:#ede9fe;">✏️</div><div class="p-label">Edit Profile</div><div class="p-arr">›</div></div>
+        <div class="profile-row" onclick="openSP('sp-settings')"><div class="p-icon" style="background:#f3f4f6;">⚙️</div><div class="p-label">Settings</div><div class="p-arr">›</div></div>
+        <div class="profile-row" onclick="openSP('sp-help')"><div class="p-icon" style="background:#ede9fe;">❓</div><div class="p-label">Help & Support</div><div class="p-arr">›</div></div>
+      </div>
+      <div id="providerLink" class="profile-card" style="display:none;">
+        <div class="profile-row" onclick="goScreen('screen-provider')"><div class="p-icon" style="background:#dcfce7;">🏪</div><div class="p-label" style="color:var(--green)">Provider Dashboard</div><div class="p-arr" style="color:var(--green)">›</div></div>
+      </div>
+      <div id="adminLink" class="profile-card" style="display:none;">
+        <div class="profile-row" onclick="goScreen('screen-admin')"><div class="p-icon" style="background:#fee2e2;">🛡️</div><div class="p-label" style="color:var(--red)">Admin Panel</div><div class="p-arr" style="color:var(--red)">›</div></div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-row" onclick="doLogout()"><div class="p-icon" style="background:#fee2e2;">🚪</div><div class="p-label" style="color:var(--red)">Log Out</div><div class="p-arr" style="color:var(--red)">›</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="navTo(this,'screen-home')"><div class="nvi">🏠</div><div class="nvl">Home</div><div class="nav-dot"></div></div>
+    <div class="nav-item" onclick="navTo(this,'screen-map')"><div class="nvi">🗺️</div><div class="nvl">Map</div><div class="nav-dot"></div></div>
+    <div class="nav-item" onclick="navTo(this,'screen-services')"><div class="nvi">🛎️</div><div class="nvl">Services</div><div class="nav-dot"></div></div>
+    <div class="nav-item active" onclick="navTo(this,'screen-profile')"><div class="nvi">👤</div><div class="nvl">Profile</div><div class="nav-dot"></div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PROVIDER DASHBOARD
+═══════════════════════════════════════════════ -->
+<div class="screen" id="screen-provider">
+  <div class="topnav">
+    <button class="back-btn" onclick="goBack()">←</button>
+    <div class="brand" style="font-size:15px;">Provider Dashboard</div>
+    <button class="icon-btn" onclick="openSP('sp-addservice')">➕</button>
+  </div>
+  <div class="scroll-body">
+    <div id="provStatusBanner" style="border-radius:var(--rs);padding:11px;margin-bottom:10px;font-size:12px;font-weight:700;text-align:center;"></div>
+    <div class="stat-grid" id="provStats"></div>
+    <div class="sec-hdr"><span class="sec-label">My Listings</span><button class="see-all" onclick="openSP('sp-addservice')">+ Add New</button></div>
+    <div id="provListings"></div>
+    <div class="sec-hdr" style="margin-top:12px;"><span class="sec-label">Incoming Bookings</span></div>
+    <div id="provBookings"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     ADMIN PANEL
+═══════════════════════════════════════════════ -->
+<div class="screen" id="screen-admin">
+  <div class="topnav">
+    <button class="back-btn" onclick="goBack()">←</button>
+    <div class="brand" style="font-size:15px;">🛡️ Admin Panel</div>
+  </div>
+  <div class="scroll-body">
+    <div class="stat-grid" id="adminStats"></div>
+    <!-- PENDING APPROVALS -->
+    <div class="sec-hdr"><span class="sec-label" style="color:var(--red);">⏳ Pending Approvals</span></div>
+    <div id="pendingList"></div>
+    <!-- MANAGE USERS -->
+    <div class="sec-hdr" style="margin-top:12px;"><span class="sec-label">👥 Manage Users</span></div>
+    <div id="adminUsers"></div>
+    <!-- MANAGE PROVIDERS -->
+    <div class="sec-hdr" style="margin-top:12px;"><span class="sec-label">🏪 Manage Providers</span></div>
+    <div id="adminProviders"></div>
+    <!-- MANAGE ALL SERVICES -->
+    <div class="sec-hdr" style="margin-top:12px;"><span class="sec-label">🛎️ All Services</span></div>
+    <div id="adminServices"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SUBPAGES
+═══════════════════════════════════════════════ -->
+
+<!-- MY BOOKINGS -->
+<div class="subpage" id="sp-bookings">
+  <div class="page-header"><button class="back-btn" onclick="closeSP('sp-bookings')">←</button><h2>My Bookings</h2></div>
+  <div class="scroll-body no-nav" id="myBookingsList"></div>
+</div>
+
+<!-- SAVED -->
+<div class="subpage" id="sp-saved">
+  <div class="page-header"><button class="back-btn" onclick="closeSP('sp-saved')">←</button><h2>Saved Services</h2></div>
+  <div class="scroll-body no-nav" id="savedList"></div>
+</div>
+
+<!-- MY REVIEWS -->
+<div class="subpage" id="sp-myreviews">
+  <div class="page-header"><button class="back-btn" onclick="closeSP('sp-myreviews')">←</button><h2>My Reviews</h2></div>
+  <div class="scroll-body no-nav" id="myReviewsList"></div>
+</div>
+
+<!-- OFFERS -->
+<div class="subpage" id="sp-offers">
+  <div class="page-header"><button class="back-btn" onclick="closeSP('sp-offers')">←</button><h2>Offers & Deals</h2></div>
+  <div class="scroll-body no-nav" id="offersList"></div>
+</div>
+
+<!-- EDIT PROFILE -->
+<div class="subpage" id="sp-editprofile">
+  <div class="page-header"><button class="back-btn" onclick="closeSP('sp-editprofile')">←</button><h2>Edit Profile</h2></div>
+  <div class="scroll-body no-nav">
+    <div style="text-align:center;padding:16px 0 10px;"><div style="width:68px;height:68px;border-radius:50%;background:var(--primary-light);border:3px solid var(--primary);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 7px;">👤</div><button style="border:none;background:var(--primary-light);color:var(--primary);padding:5px 12px;border-radius:50px;font-size:11px;font-weight:700;cursor:pointer;" onclick="toast('📷 Camera opened!')">Change Photo</button></div>
+    <div class="info-card" style="padding:12px;">
+      <div class="fg"><label>Full Name</label><input type="text" id="epName"></div>
+      <div class="fg"><label>Phone</label><input type="tel" id="epPhone"></div>
+      <div class="fg"><label>Email</label><input type="email" id="epEmail"></div>
+      <div class="fg"><label>City</label><select id="epCity"><option>Jamshedpur</option><option>Ranchi</option><option>Dhanbad</option><option>Bokaro</option><option>Hazaribagh</option></select></div>
+      <button class="primary-btn" onclick="saveProfile()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD/EDIT SERVICE (Provider) -->
+<div class="subpage" id="sp-addservice">
+  <div class="page-header"><button class="back-btn" onclick="closeSP('sp-addservice')">←</button><h2 id="addSvcTitle">Add Listing</h2></div>
+  <div class="scroll-body no-nav">
+    <div class="info-card" style="padding:12px;">
+      <div class="fg"><label>Business Name *</label><input type="text" id="asBizName"></div>
+      <div class="fg"><label>Category</label>
+        <select id="asBizCat">
+          <option value="food">🍔 Food</option><option value="electric">⚡ Electrician</option>
+          <option value="transport">🚗 Transport</option><option value="plumber">🔧 Plumber</option>
+          <option value="salon">💇 Salon</option><option value="medical">🏥 Medical</option>
+          <option value="tutor">📚 Tutor</option><option value="catering">🍽️ Catering</option>
+          <option value="cleaning">🧹 Cleaning</option><option value="laundry">👕 Laundry</option>
+          <option value="security">🛡️ Security</option>
+        </select>
+      </div>
+      <div class="fg"><label>City</label>
+        <select id="asBizCity">
+          <option>Jamshedpur</option><option>Ranchi</option><option>Dhanbad</option>
+          <option>Bokaro</option><option>Hazaribagh</option><option>Deoghar</option>
+          <option>Giridih</option><option>Dumka</option><option>Phusro</option>
+        </select>
+      </div>
+      <div class="fg"><label>Full Address *</label><input type="text" id="asBizAddr" placeholder="Street, area, city"></div>
+      <div class="fg"><label>Phone</label><input type="tel" id="asBizPhone"></div>
+      <div class="fg"><label>Email</label><input type="email" id="asBizEmail"></div>
+      <div class="fg"><label>Business Hours</label><input type="text" id="asBizHours" placeholder="9 AM – 9 PM"></div>
+      <div class="fg"><label>Price Range</label><input type="text" id="asBizPrice" placeholder="₹200–₹2000"></div>
+      <div class="fg"><label>Description</label><textarea id="asBizDesc" placeholder="Describe your services..."></textarea></div>
+      <button class="primary-btn" onclick="saveProviderService()">Submit for Approval</button>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS -->
+<div class="subpage" id="sp-settings">
+  <div class="page-header"><button class="back-btn" onclick="closeSP('sp-settings')">←</button><h2>Settings</h2></div>
+  <div class="scroll-body no-nav">
+    <div class="info-card">
+      <div class="set-row"><div class="s-ico" style="background:#1a1d2e;">🌙</div><div class="s-lbl">Dark Mode</div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+      <div class="set-row"><div class="s-ico" style="background:#eef0fd;">📍</div><div class="s-lbl">Location Access</div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+      <div class="set-row"><div class="s-ico" style="background:#dcfce7;">🔒</div><div class="s-lbl">Two-Factor Auth</div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+      <div class="set-row" onclick="toast('🗑️ Cache cleared!')"><div class="s-ico" style="background:#fff7ed;">💾</div><div class="s-lbl">Cache & Data</div><div class="s-val">48 MB</div><button class="info-action">Clear</button></div>
+      <div class="set-row" onclick="confirmDelete('account','deleteMyAccount')"><div class="s-ico" style="background:#fee2e2;">⚠️</div><div class="s-lbl" style="color:var(--red)">Delete Account</div><div class="p-arr" style="color:var(--red)">›</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- HELP -->
+<div class="subpage" id="sp-help">
+  <div class="page-header"><button class="back-btn" onclick="closeSP('sp-help')">←</button><h2>Help & Support</h2></div>
+  <div class="scroll-body no-nav">
+    <div class="info-card">
+      <div class="profile-row" onclick="toast('💬 Live chat opening...')"><div class="p-icon" style="background:#eef0fd;">💬</div><div class="p-label">Live Chat</div><div class="p-arr">›</div></div>
+      <div class="profile-row" onclick="openCallModal('CityServe Support','+91 1800 123 4567')"><div class="p-icon" style="background:#dcfce7;">📞</div><div class="p-label">Call Support</div><div class="p-arr">›</div></div>
+      <div class="profile-row" onclick="toast('📧 support@cityserve.in')"><div class="p-icon" style="background:#fce7f3;">📧</div><div class="p-label">Email Us</div><div class="p-arr">›</div></div>
+      <div class="profile-row" onclick="toast('📄 Opening FAQ...')"><div class="p-icon" style="background:#fff7ed;">❓</div><div class="p-label">FAQ</div><div class="p-arr">›</div></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /phone -->
+
+<script>
+// ════════════════════════════════════════════════
+// DATABASE
+// ════════════════════════════════════════════════
+const DB = {
+  _get(k){ try{ return JSON.parse(localStorage.getItem('cs2_'+k)); }catch{ return null; } },
+  _set(k,v){ localStorage.setItem('cs2_'+k, JSON.stringify(v)); },
+  getUsers(){ return this._get('users') || []; },
+  getServices(){ 
+    const s = this._get('services');
+    if(!s){ this._set('services', SVC_SEED.map(x=>({...x}))); return SVC_SEED.map(x=>({...x})); }
+    return s;
+  },
+  getBookings(){ return this._get('bookings') || []; },
+  getReviews(){ return this._get('reviews') || {}; },
+  getNotifs(){ return this._get('notifs') || [...NOTIF_SEED]; },
+  getCurrentUser(){ return this._get('cu'); },
+  saveUsers(u){ this._set('users',u); },
+  saveServices(s){ this._set('services',s); },
+  saveBookings(b){ this._set('bookings',b); },
+  saveReviews(r){ this._set('reviews',r); },
+  saveNotifs(n){ this._set('notifs',n); },
+  setCU(u){ this._set('cu',u); },
+  clearCU(){ localStorage.removeItem('cs2_cu'); },
+};
+
+// ════════════════════════════════════════════════
+// CONSTANTS
+// ════════════════════════════════════════════════
+const ADMIN_SECRET = 'ADMIN2024';
+
+const CAT_ICONS = {food:'🍕',electric:'⚡',transport:'🚗',plumber:'🔧',salon:'💇',medical:'🏥',tutor:'📚',catering:'🍽️',cleaning:'🧹',laundry:'👕',security:'🛡️'};
+const CAT_BG    = {food:'#fff4e6',electric:'#fffbeb',transport:'#eff6ff',plumber:'#f0fdf4',salon:'#fdf4ff',medical:'#f0fdf4',tutor:'#f0f9ff',catering:'#fff7ed',cleaning:'#ecfdf5',laundry:'#eff6ff',security:'#f8fafc'};
+
+const CATS = [
+  {id:'all',label:'✨ All'},{id:'food',label:'🍔 Food'},{id:'electric',label:'⚡ Electric'},
+  {id:'transport',label:'🚗 Transport'},{id:'plumber',label:'🔧 Plumber'},{id:'salon',label:'💇 Salon'},
+  {id:'medical',label:'🏥 Medical'},{id:'tutor',label:'📚 Tutor'},{id:'catering',label:'🍽️ Catering'},
+  {id:'cleaning',label:'🧹 Cleaning'},{id:'laundry',label:'👕 Laundry'},{id:'security',label:'🛡️ Security'},
+];
+
+const CITIES = ['All Cities','Jamshedpur','Ranchi','Dhanbad','Bokaro','Hazaribagh','Deoghar','Giridih','Dumka','Phusro'];
+
+const SVC_SEED = [
+  {id:1,name:'Raj Pizza Hub',cat:'food',city:'Jamshedpur',ver:true,rat:4.5,dist:'1.1km',desc:'Fresh pizzas & Italian',ph:'+91 98765 43210',em:'contact@rajpizza.com',addr:'MG Road, Jamshedpur, Jharkhand',hrs:'9 AM–11 PM',price:'₹150–₹500',about:'Serving fresh handmade pizzas since 2018.',status:'approved',ownerId:null},
+  {id:2,name:'Burger Bhai',cat:'food',city:'Ranchi',ver:false,rat:4.2,dist:'0.9km',desc:'Juicy burgers & snacks',ph:'+91 91234 56789',em:'burgerbhai@food.com',addr:'Station Road, Ranchi, Jharkhand',hrs:'10 AM–10 PM',price:'₹80–₹300',about:'Best burgers at pocket-friendly prices.',status:'approved',ownerId:null},
+  {id:3,name:'SparkFix Electric',cat:'electric',city:'Bokaro',ver:true,rat:4.3,dist:'0.8km',desc:'Wiring & appliance repairs',ph:'+91 90000 11223',em:'sparkfix@elec.com',addr:'Industrial Area, Bokaro, Jharkhand',hrs:'8 AM–8 PM',price:'₹200–₹2000',about:'Licensed electricians with 10+ years.',status:'approved',ownerId:null},
+  {id:4,name:'QuickRide Taxi',cat:'transport',city:'Dhanbad',ver:true,rat:4.6,dist:'1.4km',desc:'Cabs & outstation rides',ph:'+91 98001 55667',em:'quickride@taxi.com',addr:'City Cab Stand, Dhanbad, Jharkhand',hrs:'24/7',price:'₹10/km',about:'Reliable taxi service for city rides.',status:'approved',ownerId:null},
+  {id:5,name:'FixIt Plumbers',cat:'plumber',city:'Hazaribagh',ver:true,rat:4.4,dist:'1.7km',desc:'Pipes, leaks & fittings',ph:'+91 97776 88900',em:'fixit@plumb.com',addr:'Near Bus Stand, Hazaribagh, Jharkhand',hrs:'7 AM–9 PM',price:'₹300–₹1500',about:'Expert plumbers for all needs.',status:'approved',ownerId:null},
+  {id:6,name:'Style Studio',cat:'salon',city:'Jamshedpur',ver:false,rat:4.7,dist:'2.1km',desc:'Hair, skin & beauty care',ph:'+91 96655 44332',em:'stylestudio@salon.com',addr:'Fashion Street, Jamshedpur, Jharkhand',hrs:'9 AM–9 PM',price:'₹100–₹2500',about:'Premium unisex salon.',status:'approved',ownerId:null},
+  {id:7,name:'CityMed Clinic',cat:'medical',city:'Ranchi',ver:true,rat:4.8,dist:'1.2km',desc:'General physician & lab tests',ph:'+91 99887 66554',em:'citymed@clinic.com',addr:'Health Square, Ranchi, Jharkhand',hrs:'8 AM–8 PM',price:'₹200–₹1000',about:'MBBS certified physician with 15+ years.',status:'approved',ownerId:null},
+  {id:8,name:'BrightPath Tutors',cat:'tutor',city:'Deoghar',ver:true,rat:4.5,dist:'0.6km',desc:'Math, Science & English coaching',ph:'+91 91111 22333',em:'brightpath@edu.com',addr:'Learning Lane, Deoghar, Jharkhand',hrs:'6 AM–10 PM',price:'₹300/hr',about:'Expert tutors for classes 6–12.',status:'approved',ownerId:null},
+  {id:9,name:'CleanPro Services',cat:'cleaning',city:'Giridih',ver:true,rat:4.3,dist:'1.8km',desc:'Home & office deep cleaning',ph:'+91 77889 00112',em:'cleanpro@clean.com',addr:'Housekeeping Lane, Giridih, Jharkhand',hrs:'7 AM–7 PM',price:'₹499–₹2999',about:'Professional home and office cleaning.',status:'approved',ownerId:null},
+  {id:10,name:'SafeGuard Security',cat:'security',city:'Bokaro',ver:true,rat:4.4,dist:'3.2km',desc:'Guards, CCTV & alarm systems',ph:'+91 98776 55443',em:'safeguard@sec.com',addr:'Sentinel Tower, Bokaro, Jharkhand',hrs:'24/7',price:'₹8000/month',about:'Licensed security for homes and offices.',status:'approved',ownerId:null},
+];
+
+const NOTIF_SEED = [
+  {icon:'🏙️',bg:'#f3f4f6',t:'Welcome to CityServe!',s:'Discover local services in Jharkhand.',time:'Just now',unread:true},
+  {icon:'🎁',bg:'#fff7ed',t:'New Offer!',s:'20% OFF on first booking. Use FIRST20.',time:'1 hr ago',unread:true},
+];
+
+const OFFERS = [
+  {e:'🍕',t:'20% OFF first food booking',s:'Valid till April 30',c:'FIRST20'},
+  {e:'⚡',t:'Free inspection – Electrician',s:'Limited time offer',c:'FREECHECK'},
+  {e:'🚗',t:'₹50 cashback on transport',s:'Min ₹200 ride',c:'RIDE50'},
+  {e:'💇',t:'₹100 OFF salon services',s:'Weekdays only',c:'SALON100'},
+  {e:'🏥',t:'Free consultation – CityMed',s:'New users only',c:'MEDCARE'},
+];
+
+// ════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════
+let screenHist = ['screen-home'];
+let homeCat='all', homeLoc='All Cities';
+let svcCat='all',  svcLoc='All Cities';
+let curSvc=null, selectedRating=0, editingSvcId=null;
+let confirmCb=null;
+
+// ════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════
+function init(){
+  buildFilters('homeCatFilter','homeLocFilter','home');
+  buildFilters('svcCatFilter','svcLocFilter','svc');
+  renderHome();
+  updateProfileUI();
+  refreshBadge();
+}
+
+// ════════════════════════════════════════════════
+// FILTERS
+// ════════════════════════════════════════════════
+function buildFilters(catId, locId, mode){
+  // Category filter
+  const catEl = document.getElementById(catId); catEl.innerHTML='';
+  CATS.forEach(c=>{
+    const b = document.createElement('button');
+    const active = (mode==='home'?homeCat:svcCat)===c.id;
+    b.className='f-btn'+(active?' active':'');
+    b.textContent=c.label;
+    b.onclick=()=>{
+      if(mode==='home'){ homeCat=c.id; }
+      else{ svcCat=c.id; }
+      buildFilters(catId,locId,mode);
+      mode==='home'?renderHome():renderAll();
+    };
+    catEl.appendChild(b);
+  });
+
+  // Location filter
+  const locEl = document.getElementById(locId); locEl.innerHTML='';
+  CITIES.forEach(city=>{
+    const b = document.createElement('button');
+    const active = (mode==='home'?homeLoc:svcLoc)===city;
+    b.className='f-btn'+(active?' loc-active':'');
+    b.textContent='📍 '+city;
+    b.onclick=()=>{
+      if(mode==='home'){ homeLoc=city; }
+      else{ svcLoc=city; }
+      buildFilters(catId,locId,mode);
+      mode==='home'?renderHome():renderAll();
+    };
+    locEl.appendChild(b);
+  });
+}
+
+// ════════════════════════════════════════════════
+// SERVICE CARDS
+// ════════════════════════════════════════════════
+function mkCard(s){
+  const icon=CAT_ICONS[s.cat]||'🛎️', bg=CAT_BG[s.cat]||'#f3f4f6', rat=s.rat||0;
+  let badge='';
+  if(s.status==='approved'&&s.ver) badge='<span style="font-size:10px;color:var(--green);font-weight:600;">✅ Verified</span>';
+  else if(s.status==='pending') badge='<span style="font-size:10px;color:var(--amber);font-weight:600;">⏳ Pending</span>';
+  else if(s.status==='rejected') badge='<span style="font-size:10px;color:var(--red);font-weight:600;">❌ Rejected</span>';
+  const d=document.createElement('div'); d.className='service-card';
+  d.innerHTML=`
+    <div class="svc-icon" style="background:${bg}">${icon}</div>
+    <div style="flex:1;min-width:0;cursor:pointer;" onclick="openDetail(${s.id})">
+      <div class="svc-name">${s.name}</div>
+      ${badge}
+      <div class="svc-meta">
+        <span class="stars">${'★'.repeat(Math.floor(rat))}${'☆'.repeat(5-Math.floor(rat))}</span>
+        ${rat>0?rat.toFixed(1)+' · ':''}<span style="color:#059669">📍${s.city||''}</span>
+      </div>
+      <div style="font-size:11px;color:var(--muted);">${s.desc||''}</div>
+    </div>
+    <div class="svc-actions">
+      <button class="btn-call" onclick="event.stopPropagation();openCallModal('${escQ(s.name)}','${s.ph||''}')">📞</button>
+      <button class="btn-book" onclick="event.stopPropagation();openBookModal('${escQ(s.name)}',${s.id})">Book</button>
+    </div>`;
+  return d;
+}
+function escQ(s){ return (s||'').replace(/'/g,"\\'"); }
+
+function filterSvcs(mode){
+  const cat = mode==='home'?homeCat:svcCat;
+  const loc = mode==='home'?homeLoc:svcLoc;
+  const q = mode==='home'?(document.getElementById('homeSearch').value||''):(document.getElementById('svcSearch').value||'');
+  return DB.getServices().filter(s=>{
+    if(s.status!=='approved') return false;
+    if(cat!=='all' && s.cat!==cat) return false;
+    if(loc!=='All Cities' && (s.city||'')!==loc) return false;
+    if(q && !s.name.toLowerCase().includes(q.toLowerCase()) && !s.desc.toLowerCase().includes(q.toLowerCase())) return false;
+    return true;
+  });
+}
+
+function renderHome(){
+  const el=document.getElementById('servicesList'); if(!el)return;
+  el.innerHTML='';
+  const svcs=filterSvcs('home');
+  const cats=[...new Set(svcs.map(s=>s.cat))];
+  cats.forEach(c=>{
+    const f=svcs.filter(s=>s.cat===c);
+    if(!f.length)return;
+    const catObj=CATS.find(x=>x.id===c);
+    const lbl=document.createElement('div'); lbl.className='cat-label';
+    lbl.textContent=(catObj?catObj.label:c).replace(/^[^\s]+\s/,'').toUpperCase();
+    el.appendChild(lbl); f.forEach(s=>el.appendChild(mkCard(s)));
+  });
+  if(!el.children.length) el.innerHTML='<div class="empty-state"><div class="e-icon">🔍</div><p>No services match your filters</p></div>';
+}
+
+function renderAll(){
+  const el=document.getElementById('allList'); if(!el)return;
+  el.innerHTML='';
+  const svcs=filterSvcs('svc');
+  const cats=[...new Set(svcs.map(s=>s.cat))];
+  cats.forEach(c=>{
+    const f=svcs.filter(s=>s.cat===c);
+    if(!f.length)return;
+    const catObj=CATS.find(x=>x.id===c);
+    const lbl=document.createElement('div'); lbl.className='cat-label';
+    lbl.textContent=(catObj?catObj.label:c).replace(/^[^\s]+\s/,'').toUpperCase();
+    el.appendChild(lbl); f.forEach(s=>el.appendChild(mkCard(s)));
+  });
+  if(!el.children.length) el.innerHTML='<div class="empty-state"><div class="e-icon">🔍</div><p>No services match your filters</p></div>';
+}
+
+// ════════════════════════════════════════════════
+// NAVIGATION
+// ════════════════════════════════════════════════
+function goScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el=document.getElementById(id); if(!el)return;
+  el.classList.add('active');
+  if(screenHist[screenHist.length-1]!==id) screenHist.push(id);
+  if(id==='screen-services'){ buildFilters('svcCatFilter','svcLocFilter','svc'); renderAll(); }
+  if(id==='screen-admin') renderAdmin();
+  if(id==='screen-provider') renderProvider();
+  // Sync bottom nav
+  document.querySelectorAll('.bottom-nav .nav-item').forEach(n=>{
+    const t=n.getAttribute('onclick')||'';
+    n.classList.toggle('active', t.includes("'"+id+"'"));
+  });
+}
+function goBack(){
+  if(screenHist.length>1) screenHist.pop();
+  const prev=screenHist[screenHist.length-1]||'screen-home';
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el=document.getElementById(prev); if(el) el.classList.add('active');
+}
+function navTo(el,id){
+  document.querySelectorAll('.bottom-nav .nav-item').forEach(n=>n.classList.remove('active'));
+  el.classList.add('active');
+  goScreen(id);
+}
+
+// ════════════════════════════════════════════════
+// SUBPAGES / PANELS / MODALS
+// ════════════════════════════════════════════════
+function openSP(id){
+  const el=document.getElementById(id); if(!el)return;
+  el.classList.add('open');
+  if(id==='sp-bookings') renderMyBookings();
+  if(id==='sp-saved') renderSaved();
+  if(id==='sp-myreviews') renderMyReviews();
+  if(id==='sp-offers') renderOffers();
+  if(id==='sp-addservice') prepAddService();
+}
+function closeSP(id){ document.getElementById(id).classList.remove('open'); }
+function openPanel(id){ document.getElementById(id).classList.add('open'); }
+function closePanel(id){ document.getElementById(id).classList.remove('open'); }
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+
+// ════════════════════════════════════════════════
+// AUTH
+// ════════════════════════════════════════════════
+let selectedRole='user';
+
+function switchAuthTab(tab){
+  document.getElementById('tab-login').classList.toggle('active',tab==='login');
+  document.getElementById('tab-register').classList.toggle('active',tab==='register');
+  document.getElementById('form-login').style.display=tab==='login'?'block':'none';
+  document.getElementById('form-register').style.display=tab==='register'?'block':'none';
+}
+
+function selectRole(role){
+  selectedRole=role;
+  ['user','provider','admin'].forEach(r=>{
+    document.getElementById('role-'+r).classList.toggle('active',r===role);
+  });
+  document.getElementById('providerFields').style.display=role==='provider'?'block':'none';
+  document.getElementById('adminFields').style.display=role==='admin'?'block':'none';
+}
+
+function doRegister(){
+  const name=document.getElementById('regName').value.trim();
+  const email=document.getElementById('regEmail').value.trim();
+  const phone=document.getElementById('regPhone').value.trim();
+  const city=document.getElementById('regCity').value;
+  const pass=document.getElementById('regPass').value;
+
+  if(!name){ toast('⚠️ Name is required'); return; }
+  if(!email || !email.includes('@')){ toast('⚠️ Valid email required'); return; }
+  if(!pass || pass.length<4){ toast('⚠️ Password must be 4+ chars'); return; }
+
+  const users=DB.getUsers();
+  if(users.find(u=>u.email===email)){ toast('⚠️ Email already registered'); return; }
+
+  // Admin key check
+  if(selectedRole==='admin'){
+    const key=document.getElementById('regAdminKey').value;
+    if(key!==ADMIN_SECRET){ toast('❌ Wrong admin key. Use: '+ADMIN_SECRET); return; }
+  }
+
+  const newUser={
+    id:Date.now(), name, email, phone, city, pass,
+    role:selectedRole, createdAt:new Date().toLocaleDateString(),
+    suspended:false
+  };
+
+  // Provider → create pending business listing
+  if(selectedRole==='provider'){
+    const bizName=document.getElementById('regBizName').value.trim();
+    const bizAddr=document.getElementById('regBizAddr').value.trim();
+    if(!bizName||!bizAddr){ toast('⚠️ Business name & address required'); return; }
+    const services=DB.getServices();
+    const newSvc={
+      id:Date.now()+1, name:bizName,
+      cat:document.getElementById('regBizCat').value,
+      city, ver:false, rat:0, dist:'?',
+      desc:(document.getElementById('regBizDesc').value||bizName).substring(0,55),
+      ph:phone, em:email, addr:bizAddr,
+      hrs:'9 AM–9 PM',
+      price:document.getElementById('regBizPrice').value||'Contact',
+      about:document.getElementById('regBizDesc').value||'',
+      status:'pending', ownerId:newUser.id
+    };
+    services.push(newSvc);
+    DB.saveServices(services);
+    newUser.businessId=newSvc.id;
+  }
+
+  if(s){s.status='approved';s.ver=true;} DB.saveServices(svcs); renderAdmin(); toast('✅ Business approved & live!');
+  addNotif('✅','#dcfce7','Approved','A provider listing is now live.','Just now');
+}
+function adminReject(id){
+  const svcs=DB.getServices(); const s=svcs.find(x=>x.id===id);
+  if(s){s.status='rejected';s.ver=false;} DB.saveServices(svcs); renderAdmin(); toast('❌ Listing rejected');
+}
+function adminSuspend(id){
+  const svcs=DB.getServices(); const s=svcs.find(x=>x.id===id);
+  if(s){s.status='pending';s.ver=false;} DB.saveServices(svcs); renderAdmin(); toast('⏸️ Suspended');
+}
+function adminToggleSuspend(uid){
+  const users=DB.getUsers(); const u=users.find(x=>x.id===uid);
+  if(u){ u.suspended=!u.suspended; } DB.saveUsers(users);
+  const cu=DB.getCurrentUser(); if(cu&&cu.id===uid){cu.suspended=u.suspended;DB.setCU(cu);}
+  renderAdmin(); toast(u&&u.suspended?'🚫 User suspended':'✅ User restored');
+}
+function adminDeleteUser(uid){
+  DB.saveUsers(DB.getUsers().filter(u=>u.id!==uid)); renderAdmin(); toast('🗑️ User deleted');
+}
+function adminDeleteService(id){
+  DB.saveServices(DB.getServices().filter(s=>s.id!==id)); renderAdmin(); toast('🗑️ Service deleted');
+}
+
+// ════════════════════════════════════════════════
+// CONFIRM DIALOG
+// ════════════════════════════════════════════════
+function confirmDelete(type, fnName, id){
+  const titles={listing:'Delete Listing',service:'Delete Service',user:'Delete User',booking:'Delete Booking',account:'Delete Account'};
+  document.getElementById('confirmTitle').textContent=titles[type]||'Are you sure?';
+  document.getElementById('confirmMsg').textContent='This action cannot be undone.';
+  const okBtn=document.getElementById('confirmOkBtn');
+  okBtn.onclick=()=>{
+    closeConfirm();
+    if(type==='listing'||type==='service') adminDeleteService(id);
+    else if(type==='user') adminDeleteUser(id);
+    else if(type==='booking') deleteBooking(id);
+    else if(type==='account') deleteMyAccount();
+    else if(fnName) window[fnName]&&window[fnName](id);
+  };
+  document.getElementById('confirmOverlay').classList.add('open');
+}
+function closeConfirm(){ document.getElementById('confirmOverlay').classList.remove('open'); }
+
+// ════════════════════════════════════════════════
+// NOTIFICATIONS
+// ════════════════════════════════════════════════
+function refreshBadge(){
+  const notifs=DB.getNotifs();
+  const badge=document.getElementById('notifBadge');
+  badge.style.display=notifs.some(n=>n.unread)?'block':'none';
+}
+function openNotifs(){
+  const notifs=DB.getNotifs();
+  notifs.forEach(n=>n.unread=false); DB.saveNotifs(notifs);
+  renderNotifs(); openPanel('notifPanel'); refreshBadge();
+}
+function renderNotifs(){
+  const el=document.getElementById('notifList'); if(!el)return;
+  const notifs=DB.getNotifs(); el.innerHTML='';
+  if(!notifs.length){ el.innerHTML='<div class="empty-state"><div class="e-icon">🔔</div><p>No notifications</p></div>'; return; }
+  notifs.forEach(n=>{
+    const d=document.createElement('div'); d.className='notif-item'+(n.unread?' unread':'');
+    d.innerHTML=`<div class="n-icon" style="background:${n.bg}">${n.icon}</div><div style="flex:1"><div style="font-size:12px;font-weight:700;color:var(--text);">${n.t}</div><div style="font-size:11px;color:var(--muted);margin-top:1px;">${n.s}</div><div style="font-size:10px;color:var(--muted);margin-top:2px;">${n.time}</div></div>`;
+    el.appendChild(d);
+  });
+}
+function addNotif(icon,bg,title,sub,time){
+  const notifs=DB.getNotifs();
+  notifs.unshift({icon,bg,t:title,s:sub,time,unread:true});
+  DB.saveNotifs(notifs); refreshBadge();
+}
+function clearNotifs(){ DB.saveNotifs([]); renderNotifs(); toast('🔔 Cleared'); }
+
+// ════════════════════════════════════════════════
+// TOAST
+// ════════════════════════════════════════════════
+let tTimer;
+function toast(msg){
+  clearTimeout(tTimer);
+  document.getElementById('toastMsg').textContent=msg;
+  document.getElementById('toast').classList.add('show');
+  tTimer=setTimeout(()=>document.getElementById('toast').classList.remove('show'),2600);
+}
+
+// ════════════════════════════════════════════════
+// START
+// ════════════════════════════════════════════════
+init();
+</script>
+</body>
+</html>
