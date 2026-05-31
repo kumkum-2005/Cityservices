@@ -17,3 +17,28 @@ A modern local service discovery platform designed to connect users with nearby 
  * 📱 Responsive mobile-friendly design
  * 🔔 Notification support
  * 👤 User profile section
+
+# 🚀 New Features to Add
+
+Future improvements planned for CityServe:
+
+# User Features
+  * 🔐 User Authentication (Login/Signup)
+  * ❤️ Favorite Services
+  * 📝 Service Reviews & Comments
+  * 💬 Real-time Chat with Service Providers
+  * 📅 Appointment Scheduling
+  * 🔔 Push Notifications
+  * 🌙 Dark Mode
+
+# Business Features
+  * 🏪 Business Registration Portal
+  * 📊 Business Analytics Dashboard
+  * 📈 Service Performance Tracking
+  * 💳 Online Payment Integration
+  * 📢 Promotional Advertisements
+# AI Features
+  * 🤖 AI-powered Service Recommendations
+  * 🎤 Voice Search
+  * 🌐 Multilingual Support
+  * 💡 Smart Nearby Suggestions
