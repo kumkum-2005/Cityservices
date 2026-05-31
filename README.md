@@ -42,3 +42,5 @@ Future improvements planned for CityServe:
   * 🎤 Voice Search
   * 🌐 Multilingual Support
   * 💡 Smart Nearby Suggestions
+
+## Acknowledgements
